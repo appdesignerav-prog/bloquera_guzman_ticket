@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket POS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #eee;
+            display: flex;
+            justify-content: center;
+        }
+
+        .POS {
+            width: 340px;
+            background: #fff;
+            overflow: hidden;
+            padding: 5px;
+            border: 1px dashed #ccc;
+        }
+
+        .qr {
+            width: 80px;
+            margin: 15px auto;
+        }
+
+        .logo {
+            margin: 15px auto;
+            display: block;
+            max-width: 60px;
+        }
+
+        .logo img {
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .info_empresa {
+            font-size: 12px;    
+        }
+
+        .info_empresa h2 {
+            font-size: 1rem;
+        }
+
+        .info_empresa p {
+            margin: 2px 0;
+        }
+
+        .info_ticket {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .id_ticket {
+            font-size: 12px;
+            padding-bottom: 10px;
+        }
+
+        .info_cliente {
+            padding: 10px 15px 0 15px;
+            font-size: 13px;
+            border-top: 1px dashed #999;
+        }
+
+        .line {
+            border-top: 1px dashed #999;
+            margin: 10px 0;
+        }
+
+        /* TABLA */
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .tabla th, .tabla td {
+            padding: 5px;
+        }
+
+        .tabla thead {
+            border-bottom: 1px dashed #999;
+        }
+
+        .tabla tbody tr {
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .tabla th:nth-child(2),
+        .tabla td:nth-child(2),
+        .tabla th:nth-child(3),
+        .tabla td:nth-child(3) {
+            text-align: right;
+        }
+
+        .total {
+            padding: 0 15px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            padding: 10px;
+            color: #555;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="POS">
+
+    <div class="qr">
+        <img id="qr-code" src="" width="100%">
+    </div>
+
+    <div class="header">
+        <div class="logo">
+        </div>
+        <div class="info_empresa">
+            <h2>BLOQUERA GUZMAN</h2>
+            <p>La Haciendita, Nuevo Celilac, S.B</p>
+            <p>Tel: +504 9838-6604</p>
+        </div>
+    </div>
+
+    <div class="info_ticket">
+        <div id="f"></div>
+        <div class="id_ticket"><strong>Ticket ID:</strong> <span id="ticket"></span></div>
+    </div>
+
+    <div class="info_cliente">
+        <div><strong>Cliente:</strong> <span id="c"></span></div>
+        <div><strong>Método de Pago:</strong> <span id="p"></span></div>
+    </div>
+
+    <div class="line"></div>
+
+    <!-- tabla detalle -->
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Cant.</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="items"></tbody>
+    </table>
+
+    <div class="line"></div>
+
+    <div class="total">
+        <span>TOTAL</span>
+        <span id="t"></span>
+    </div>
+
+    <div class="footer">
+        Gracias por preferirnos
+    </div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+function getParam(name, fallback) {
+    return params.get(name) || fallback;
+}
+
+// Fecha
+const fechaRaw = getParam("f", null);
+let fechaFormateada = fechaRaw ? new Date(fechaRaw).toLocaleString() : new Date().toLocaleString();
+
+// Datos
+const ticket = getParam("ticket", Math.floor(Math.random() * 10000));
+const cliente = getParam("c", "Cliente Final");
+const l = getParam("l", "Principal");
+const p = getParam("p", "Efectivo");
+
+// Detalle
+let detalleRaw = params.get("d") || "Corte x1:100,Barba x2:50,Shampoo x1:70";
+
+const itemsDiv = document.getElementById("items");
+let totalCalculado = 0;
+
+// Procesar productos
+detalleRaw.split(",").forEach(item => {
+    if (!item) return;
+
+    const partes = item.split(":");
+    if (partes.length < 2) return;
+
+    const nombreCantidad = partes[0];
+    const precio = parseFloat(partes[1]) || 0;
+
+    const [nombre, cantidadRaw] = nombreCantidad.split(" x");
+    const cantidad = parseInt(cantidadRaw) || 1;
+
+    const subtotal = precio;
+    totalCalculado += subtotal;
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${nombre}</td>
+        <td>${cantidad}</td>
+        <td>L ${subtotal.toFixed(2)}</td>
+    `;
+
+    itemsDiv.appendChild(tr);
+});
+
+// Mostrar datos
+document.getElementById("f").innerText = fechaFormateada;
+document.getElementById("ticket").innerText = ticket;
+document.getElementById("c").innerText = cliente;
+document.getElementById("p").innerText = p;
+
+// Total
+const totalParam = params.get("t");
+const totalFinal = totalParam ? parseFloat(totalParam) : totalCalculado;
+
+document.getElementById("t").innerText = "L " + totalFinal.toFixed(2);
+
+// QR
+document.getElementById("qr-code").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=" + encodeURIComponent(ticket);
+</script>
+
+</body>
+</html>
