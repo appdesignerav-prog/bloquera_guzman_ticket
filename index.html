@@ -157,7 +157,7 @@
         <div><strong>Cliente:</strong> <span id="c"></span></div>
         <div><strong>Método de Pago:</strong> <span id="p"></span></div>
         <div><strong>Entrega:</strong> <span id="e"></span></div>
-        <div id="div_fe"><strong>Fecha de Entrega:</strong> <span id="fe"></span></div>
+        <div id = "div_fe"><strong>Fecha de Entrega:</strong> <span id="fe"></span></div>
     </div>
 
     <div class="line"></div>
@@ -205,9 +205,9 @@ const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
 const e = getParam("e", "No especificado");
 const fe = getParam("fe", "null");
-if (e == "ENTREGADO"){
-    const fechaEntrega = document.getElementById("div_fe");
-    fechaEntrega.remove();
+if (e === "ENTREGADO"){
+    const elemento = document.getElementById("div_fe");
+  elemento.remove();
 }
 
 // Detalle
