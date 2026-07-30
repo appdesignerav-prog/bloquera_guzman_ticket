@@ -204,11 +204,11 @@ const cliente = getParam("c", "Cliente Final");
 const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
 const e = getParam("e", "No especificado");
-if (e == "PENDIENTE"){
-    const fe = getParam("fe", "null");
-  } else{
-    document.getElementById("div_fe").remove()
-};
+const fe = getParam("fe", "null");
+if (e != "PENDIENTE"){
+    const fechaEntrega = document.getElementById("div_fe");
+    fechaEntrega.remove();
+}
 
 // Detalle
 let detalleRaw = params.get("d") || "Corte x1:100,Barba x2:50,Shampoo x1:70";
