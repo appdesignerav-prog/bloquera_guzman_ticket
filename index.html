@@ -111,6 +111,8 @@
             padding: 0 15px;
             font-size: 20px;
             font-weight: bold;
+        }
+        .datos_pago{
             display: flex;
             justify-content: space-between;
         }
@@ -177,8 +179,18 @@
     <div class="line"></div>
 
     <div class="total">
-        <span>TOTAL</span>
-        <span id="t"></span>
+        <div class="datos_pago">
+            <span>TOTAL</span>
+            <span id="t"></span>
+        </div>
+        <div class="datos_pago">
+            <span>ANTICIPO</span>
+            <span id="anticipo"></span>
+        </div>
+        <div class="datos_pago">
+            <span>SALDO</span>
+            <span id="saldo"></span>
+        </div>
     </div>
 
     <div class="footer">
@@ -205,6 +217,7 @@ const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
 const e = getParam("e", "No especificado");
 const fe = getParam("fe", fechaFormateada);
+const saldo = getParam("s", "t");
 
 
 // Detalle
@@ -239,7 +252,8 @@ detalleRaw.split(",").forEach(item => {
 
     itemsDiv.appendChild(tr);
 });
-
+const anticipo = getParam("a", totalCalculado - saldo);
+    
 // Mostrar datos
 document.getElementById("f").innerText = fechaFormateada;
 document.getElementById("ticket").innerText = ticket;
@@ -247,7 +261,8 @@ document.getElementById("c").innerText = cliente;
 document.getElementById("p").innerText = p;
 document.getElementById("e").innerText = e;
 document.getElementById("fe").innerText = fe;
-
+document.getElementById("saldo").innerText = saldo;
+document.getElementById("anticipo").innerText = anticipo;
 // Total
 const totalParam = params.get("t");
 const totalFinal = totalParam ? parseFloat(totalParam) : totalCalculado;
