@@ -265,9 +265,9 @@ document.getElementById("fe").innerText = fe;
 // Total
 const totalParam = params.get("t");
 const totalFinal = totalParam ? parseFloat(totalParam) : totalCalculado;
-const saldo = getParam("s", "t");
-let anti = totalFinal - saldo;
-const anticipo = getParam("a", anti);
+const anticipo = getParam("a", totalFinal);
+const calcularSaldo = totalFinal - anticipo;
+const saldo = getParam("s", calcularSaldo);
 
 document.getElementById("t").innerText = "L " + totalFinal.toFixed(2);
 document.getElementById("saldo").innerText =  "L " + saldo;
