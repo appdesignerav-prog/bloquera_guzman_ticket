@@ -143,6 +143,7 @@
         <div class="info_empresa">
             <h2>BLOQUERA GUZMAN</h2>
             <p>La Haciendita, Nuevo Celilac, S.B</p>
+            <p>RTN: 1615200600809</p>
             <p>Tel: +504 9838-6604</p>
         </div>
     </div>
@@ -155,6 +156,7 @@
     <div class="info_cliente">
         <div><strong>Cliente:</strong> <span id="c"></span></div>
         <div><strong>Método de Pago:</strong> <span id="p"></span></div>
+         <div><strong>Entrega:</strong> <span id="e"></span></div>
     </div>
 
     <div class="line"></div>
@@ -200,6 +202,7 @@ const ticket = getParam("ticket", Math.floor(Math.random() * 10000));
 const cliente = getParam("c", "Cliente Final");
 const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
+const e = getParam("e", "No especificado");
 
 // Detalle
 let detalleRaw = params.get("d") || "Corte x1:100,Barba x2:50,Shampoo x1:70";
@@ -239,6 +242,7 @@ document.getElementById("f").innerText = fechaFormateada;
 document.getElementById("ticket").innerText = ticket;
 document.getElementById("c").innerText = cliente;
 document.getElementById("p").innerText = p;
+document.getElementById("e").innerText = e;
 
 // Total
 const totalParam = params.get("t");
