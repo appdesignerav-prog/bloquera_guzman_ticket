@@ -70,7 +70,7 @@
         }
 
         .info_cliente {
-            padding: 5px 15px 0 15px;
+            padding: 2px 15px;
             font-size: 14px;
             border-top: 1px dashed #999;
         }
@@ -156,7 +156,8 @@
     <div class="info_cliente">
         <div><strong>Cliente:</strong> <span id="c"></span></div>
         <div><strong>Método de Pago:</strong> <span id="p"></span></div>
-         <div><strong>Entrega:</strong> <span id="e"></span></div>
+        <div><strong>Entrega:</strong> <span id="e"></span></div>
+        <div id="div_fe"><strong>Fecha de Entrega:</strong> <span id="fe"></span></div>
     </div>
 
     <div class="line"></div>
@@ -203,6 +204,11 @@ const cliente = getParam("c", "Cliente Final");
 const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
 const e = getParam("e", "No especificado");
+if (e == "PENDIENTE"){
+    const fe = getParam("fe", "null");
+  } else{
+    document.getElementById("div.fe").remove()
+};
 
 // Detalle
 let detalleRaw = params.get("d") || "Corte x1:100,Barba x2:50,Shampoo x1:70";
@@ -243,6 +249,7 @@ document.getElementById("ticket").innerText = ticket;
 document.getElementById("c").innerText = cliente;
 document.getElementById("p").innerText = p;
 document.getElementById("e").innerText = e;
+document.getElementById("fe").innerText = fe;
 
 // Total
 const totalParam = params.get("t");
