@@ -109,7 +109,7 @@
 
         .total {
             padding: 0 15px;
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
         }
         .datos_pago{
@@ -265,7 +265,9 @@ document.getElementById("fe").innerText = fe;
 // Total
 const totalParam = params.get("t");
 const totalFinal = totalParam ? parseFloat(totalParam) : totalCalculado;
-const anticipo = getParam("a", totalFinal - saldo);
+const saldo = getParam("s", "t");
+let anti = totalFinal - saldo;
+const anticipo = getParam("a", anti);
 const saldo = getParam("s", "t");
 
 document.getElementById("t").innerText = "L " + totalFinal.toFixed(2);
