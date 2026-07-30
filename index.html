@@ -205,7 +205,7 @@ const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
 const e = getParam("e", "No especificado");
 const fe = getParam("fe", "null");
-if (e != "PENDIENTE"){
+if (e == "ENTREGADO"){
     const fechaEntrega = document.getElementById("div_fe");
     fechaEntrega.remove();
 }
