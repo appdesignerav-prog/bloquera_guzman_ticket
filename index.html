@@ -268,10 +268,9 @@ const totalFinal = totalParam ? parseFloat(totalParam) : totalCalculado;
 const saldo = getParam("s", "t");
 let anti = totalFinal - saldo;
 const anticipo = getParam("a", anti);
-const saldo = getParam("s", "t");
 
 document.getElementById("t").innerText = "L " + totalFinal.toFixed(2);
-document.getElementById("saldo").innerText =  "L " + saldo.toFixed(2);
+document.getElementById("saldo").innerText =  "L " + saldo;
 document.getElementById("anticipo").innerText =  "L " + anticipo.toFixed(2);
 
 // QR
