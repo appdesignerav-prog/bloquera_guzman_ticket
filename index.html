@@ -205,10 +205,7 @@ const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
 const e = getParam("e", "No especificado");
 const fe = getParam("fe", "null");
-if (e === "ENTREGADO"){
-    const elemento = document.getElementById("div_fe");
-  elemento.remove();
-}
+
 
 // Detalle
 let detalleRaw = params.get("d") || "Corte x1:100,Barba x2:50,Shampoo x1:70";
