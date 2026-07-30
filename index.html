@@ -217,7 +217,7 @@ const l = getParam("l", "Principal");
 const p = getParam("p", "Efectivo");
 const e = getParam("e", "No especificado");
 const fe = getParam("fe", fechaFormateada);
-const saldo = getParam("s", "t");
+
 
 
 // Detalle
@@ -252,7 +252,7 @@ detalleRaw.split(",").forEach(item => {
 
     itemsDiv.appendChild(tr);
 });
-const anticipo = getParam("a", totalCalculado - saldo);
+
     
 // Mostrar datos
 document.getElementById("f").innerText = fechaFormateada;
@@ -261,13 +261,16 @@ document.getElementById("c").innerText = cliente;
 document.getElementById("p").innerText = p;
 document.getElementById("e").innerText = e;
 document.getElementById("fe").innerText = fe;
-document.getElementById("saldo").innerText = saldo;
-document.getElementById("anticipo").innerText = anticipo;
+
 // Total
 const totalParam = params.get("t");
 const totalFinal = totalParam ? parseFloat(totalParam) : totalCalculado;
+const anticipo = getParam("a", totalFinal - saldo);
+const saldo = getParam("s", "t");
 
 document.getElementById("t").innerText = "L " + totalFinal.toFixed(2);
+document.getElementById("saldo").innerText =  "L " + saldo.toFixed(2);
+document.getElementById("anticipo").innerText =  "L " + anticipo.toFixed(2);
 
 // QR
 document.getElementById("qr-code").src =
